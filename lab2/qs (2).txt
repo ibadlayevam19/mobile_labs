@@ -1,0 +1,280 @@
+Malika Ibadlayeva
+230038
+Friday 9:00
+
+Main Function
+2
+Like in C++, main function is entry point of program in java too. When program starts, runtime environment looks for main and starts the execution from main.
+Static mean method belongs to the class, not object instance. When java virtual machine starts, objects of the class do not exist yet. 
+Declaring main as static allows the mchine to call it directly without creating an object.
+3
+in C++
+return type is int -> return exit status to the OS. 
+parameters: (int argc, char* argv[])-> argc=number of arguments and argv=array of char pointers.
+access modifiers: no modifiers(global function, outside class)
+in java
+return type is void -> no return value, exit status handled via exceptions or System.exit().
+parameters: (String[] args)-> array of strings containing arguments.
+access modifiers: public(so jvm can access it from outside the class)
+4
+in C++
+return 0 -> success
+return non-zero -> error
+in java
+main return void, no return value
+to signal exit status to the OS, java uses System.exit(statusCode)
+statusCode=0 -> normal termination, if non-zero -> abnormal
+
+Variables
+2
+in both, primitive types values are stored directly in memory
+in c++
+stored in stack or heap
+in java always store the actual value, on stack
+int x=5; ->memory directly holds 5.
+
+reference types
+store a reference(address) pointing to the actual object in memory.
+in c++
+programmer manages memory using new/delete
+in java
+objects are always on heap, references are stored on stack
+String s="Hello", s takes reference, actual string is in heap.
+3
+scope - region of code where a variable is visible and accessible
+local scope (methor or function scope)
+variable declared inside a method or a block
+exists only when block/method executes
+stored in stack
+void func(){
+    int x=10
+} here x can not be used outside of func()
+
+class-level/static scope
+declared inside a class, but outside of methods
+exists as long as class exists or object
+stored in heap
+4
+staticly typed languages
+variable types are known at compile-timr
+compiler checks them before running
+int x=9
+x='hi' -. this gives error
+
+dynamicly typed languages
+variables types are determined at runtime
+different types can be assigned to smae variable during execution
+x=7
+x='hello'
+
+Control Flow
+2
+while loop
+initially, condition is checked 
+loop body will not execute if condition is false initially
+choose this when you want to check condition before execution(reading until EOF)
+do-while loop
+body is executed at least once, condition is checked after execution
+choose this when loop must run at least once(user must see the menu first before deciding to quit)
+3
+switch is multi-branch conditional that allows testing a variable against multiple contant values
+case -> label that matches switch expression
+break -> prevents fall-through executing the next case unintentionally
+default -> executed if no case is matched
+4
+compiler/runtime stops evaluating as soon as result is determined
+A&&B 
+if A is false, whole is false, B is not evaluated
+A||B 
+if A is true, whole is true, B is not evaluated
+example
+if (ptr!=nullptr && ptr->value >0){}
+when ptr is null, checking ptr->value would cause a crash
+
+Functions/methods
+2
+arguments passing:
+c++
+pass by value → copy of variable, original not affected
+pass by pointer → function gets memory address, can modify original
+pass by reference → alias to original, changes affect caller directly
+java
+always pass by value
+primitives → value copied
+objects → reference copied, so fields can change but not the reference itself
+3
+function / method overloading:
+same function name, different parameter list
+differences: number, type, or order of parameters
+return type alone not enough
+example:
+int add(int a, int b) { return a + b; }
+double add(double a, double b) { return a + b; }
+4
+recursion:
+function calling itself on smaller problem
+must have base case to stop recursion
+without base case → infinite recursion / stack overflow
+example: factorial
+int fact(int n) {
+    if (n == 0) return 1;  
+    return n * fact(n - 1); 
+}
+
+Comments
+2
+comments are important for maintainability because they make code easier to understand for others and for yourself in the future. in a team, clear comments help new members quickly follow the logic and reduce misunderstandings.
+3
+documentation comment systems like javadoc (java) and doxygen (c++) are used to automatically generate external documentation from source code. they provide structured explanations of classes, methods, parameters, and return values, making large projects easier to navigate.
+4
+“good code is self-documenting” means variable names, method names, and structure should be clear enough to explain purpose without extra words. but comments are still necessary when:
+logic is complex or non-obvious
+algorithms are tricky or have special cases
+explaining why a design choice was made
+marking todos or future improvements
+
+Classes
+2
+a class is a blueprint or template that defines properties (fields) and behaviors (methods).
+an object (or instance) is a real entity created from the class at runtime.
+example: class Car {} is a blueprint, while Car myCar = new Car(); is an object.
+3
+access specifiers:
+public → members are accessible from anywhere
+private → members are accessible only inside the class
+protected → members are accessible inside the class, its subclasses, and sometimes within the same package/module (in java)
+4
+a constructor is a special method with the same name as the class, used to initialize objects when they are created.
+a default constructor is one with no parameters. if no constructor is defined by the programmer, the compiler automatically provides a default constructor that sets primitive fields to zero/false and references to null
+
+Enums
+2
+advantages of enums over strings/integers:
+prevent invalid values (only fixed set allowed)
+easier to read and understand than arbitrary numbers or text
+reduce bugs caused by typos in strings or mismatched constants
+supported directly by compiler for type checks
+3
+enums improve type safety because only defined values can be assigned, not any random int or string.
+they also make code self-documenting by giving meaningful names (e.g. Season::SUMMER instead of 2).
+this improves readability and maintainability.
+4
+comparison java vs c++ enums:
+java enums are more powerful, they are full classes that can have fields, methods, and constructors.
+example:
+enum Season {
+    SUMMER("hot"), WINTER("cold");
+    String weather;
+    Season(String w) { weather = w; }
+    String getWeather() { return weather; }
+}
+
+c++ scoped enums (enum class) are strongly typed and safer than old c-style enums, but simpler than java enums. they cannot directly have methods or fields, but can be combined with classes/structs if needed.
+old c-style enums were just integer constants, no type safety.
+java enums guarantee a fixed number of instances, while c++ enums are just symbolic values.
+
+Inheritance
+2
+“is-a” relationship → inheritance. a car is a vehicle, so car inherits from vehicle.
+“has-a” relationship → composition. a car has a engine, so engine would be a member object inside car.
+inheritance expresses hierarchy, composition expresses containment.
+3
+method overriding → redefining a method from the base class in a derived class with the same signature.
+c++ → use virtual in base, and override in derived for clarity.
+class Vehicle {
+public: virtual void startEngine() {}
+};
+class Car : public Vehicle {
+public: void startEngine() override {}
+};
+java → use @Override annotation in subclass to ensure correct overriding.
+class Vehicle {
+    void startEngine() {}
+}
+class Car extends Vehicle {
+    @Override
+    void startEngine() {}
+}
+
+4
+diamond problem → happens in multiple inheritance when a class inherits from two classes that share a common base, leading to ambiguity of which base implementation to use.
+c++ → solved with virtual inheritance, ensuring only one shared base subobject.
+java → avoids the problem entirely by not allowing multiple class inheritance. it allows multiple interfaces instead, and interface methods must be implemented explicitly in the subclass.
+
+Mixins
+2
+the primary goal of mixins or interfaces with default methods is to promote code reuse without forcing a rigid “is-a” inheritance chain. instead of inheriting full behavior from a base class, classes can mix in small reusable capabilities. this avoids deep hierarchies and makes code more modular.
+3
+in java, interfaces can have default methods, which provide a body in addition to the method signature. this allows interfaces to carry reusable behavior like mixins, while still letting classes choose to override them.
+example:
+
+interface Printable {
+    default void print() {
+        System.out.println(this.toString());
+    }
+}
+a class that implements Printable gets the print() functionality automatically, similar to a mixin.
+4
+trade-offs:
+inheritance → simple and direct, but can lead to rigid hierarchies and diamond problem if multiple inheritance is allowed.
+composition → more flexible, “has-a” relationship, avoids hierarchy problems, but requires more boilerplate to forward calls.
+mixin-like patterns → allow horizontal code reuse (small capabilities shared across unrelated classes). more flexible than inheritance, but can complicate design if overused.
+
+Polymorphism
+2
+compile-time (static) polymorphism is resolved by the compiler. the most common example is function/method overloading (same function name, different parameter list) or operator overloading in c++.
+example (c++):
+
+int add(int a, int b) { return a + b; }
+double add(double a, double b) { return a + b; }
+
+the compiler chooses the correct version at compile time.
+runtime (dynamic) polymorphism is resolved during execution, typically using virtual methods. it allows different behaviors depending on the actual object type at runtime.
+example (from your code):
+Shape* s = new Circle(5);
+std::cout << s->getArea(); // circle’s getArea() runs, not shape’s
+3
+an abstract class in c++/java is a class with at least one pure virtual/abstract method. you cannot instantiate it directly, only subclass it.
+an interface (java) or a fully abstract class (c++ with all pure virtual functions) declares only behavior contracts, no implementation (except java’s default/static methods).
+use an abstract class when you want to share some implementation among subclasses. use an interface when you only need a contract (multiple classes can implement it alongside other parents).
+4
+in java, interfaces define method contracts. polymorphism works because any object of a class that implements an interface can be used where that interface type is expected.
+in c++, abstract classes with pure virtual functions play the same role. any subclass that implements the pure virtuals can be used polymorphically via base class pointers or references.
+
+Async operations
+2
+the main problem asynchronous programming solves is blocking. in applications with heavy i/o (like network requests, disk access, or database queries), if you wait synchronously, the program stalls and wastes cpu cycles. asynchronous programming allows the program to continue doing other useful work while the operation completes in the background.
+3
+parallel execution: tasks literally run at the same time on multiple cores/threads. goal: speed up computation.
+concurrent execution: tasks are logically progressing at the same time but may be interleaved on a single core. goal: responsiveness and handling multiple tasks fairly.
+example: downloading two files — parallel means both actively download on separate threads; concurrent means one gets a little time, then the other, switching rapidly.
+4
+a future is a placeholder for a result that will be available later.
+a promise is the producer side: it sets the value (or exception) of the computation, which the future then delivers to the consumer.
+in java:
+Future gives you access to a result (blocking get()).
+CompletableFuture extends it, allowing chaining, callbacks, and non-blocking composition.
+in c++:
+std::future retrieves the result of an async task.
+std::promise provides a way for one thread to supply the value that the associated future will later receive.
+
+Exceptions
+2. try, catch, finally in c++
+try: wrap code that might throw an exception.
+catch: handle exceptions of specific types. multiple catches can be used.
+finally: c++ doesn’t have it directly. instead, it relies on raii — resources (like file handles, locks) are tied to object lifetimes, and their destructors automatically release resources when they go out of scope, mimicking a finally.
+3. checked vs unchecked (java vs c++)
+
+java:
+checked exceptions (like IOException) must be declared or caught — compiler enforces handling.
+unchecked exceptions (like NullPointerException) are subclasses of RuntimeException and not enforced by compiler.
+c++: all exceptions are unchecked. the compiler doesn’t enforce declaration or handling — you can throw anything, and it’s the programmer’s job to manage them.
+4. advantages and disadvantages of exceptions
+advantages:
+clean separation of normal logic and error-handling logic.
+propagate errors without manual checking at each step.
+can carry detailed error information.
+disadvantages:
+can hurt performance (stack unwinding is costly).
+overuse makes code harder to follow.
+if not handled, exceptions can terminate the program abruptly.
